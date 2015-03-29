@@ -58,7 +58,7 @@ class Listener(Application):
             return False
     
     def on_transport(self, beacon):
-        x = datetime.datetime.now() - datetime.datetime(1989, 12, 31, 0, 0, 0)
+        x = datetime.datetime.utcnow() - datetime.datetime(1989, 12, 31, 0, 0, 0)
         t = Time(int(x.total_seconds()), 0xffffffff, 0)
     
         self._send_commandpipe(t.get())
