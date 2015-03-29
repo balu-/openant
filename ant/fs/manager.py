@@ -322,6 +322,7 @@ class Application:
                     crc = response._get_argument("crc")
                     offset = total
                 else:
+                    _logger.debug("AntFSDownloadException: Download request failed")
                     raise AntFSDownloadException("Download request failed: ",
                                                  response._get_argument("response"))
             except queue.Empty:

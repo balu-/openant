@@ -85,7 +85,8 @@ class CommandPipe:
     @classmethod
     def _parse(cls, data):
         args = cls._parse_args(data)
-        assert args[0] == cls._id
+        if args[0] != cls._id:
+           _logger.debug("args[0] != cls._id: %s != %s", args[0], cls._id)
         return cls(*args[2:])
 
     def _debug(self):
@@ -191,7 +192,7 @@ _classes = {
     CommandPipe.Type.FACTORY_RESET_COMMAND: None}
 
 _responses = {
-    CommandPipe.Type.TIME: Response,
+    CommandPipe.Type.TIME: Time,
     CommandPipe.Type.CREATE_FILE: CreateFileResponse}
 
 
@@ -200,5 +201,8 @@ def parse(data):
     if commandpipe_type == Response:
         if data[4] in _responses:
             commandpipe_type = _responses[data[4]]
+    #print("Commandpipe_type: ", commandpipe_type)
+    #print("len data :", len(data))
+    #print("date: %s",data)
     return commandpipe_type._parse(data)
 
